@@ -1,92 +1,122 @@
-enum RSEnum {
-    Foo(i32),
-    Foo2(Option<i32>),
-    Bar(String),
-    Baz(Vec<String>)
-}
+use std::path::PathBuf;
 
-enum Option2<T> {
-    None,
-    Some(T)
-}
+use anyhow::{Result, anyhow, Context};
 
-impl<T> Option2<T> {
-    fn is_some(&self) -> bool {
-        return match self {
-            Option2::None => false,
-            Option2::Some(_) => true
-        }
+fn error_me(throw: bool) -> Result<()> {
+    if throw {
+        return Err(anyhow!("this should never be true"));
     }
+
+    std::fs::read(PathBuf::from("/foo")).context("Hey, unable to do this");
+
+    return Ok(());
 }
 
-fn main() {
-    // let a = vec![];
-    // let mut b = a;
+fn main() -> Result<(), usize> {
 
-    // b.push(1);
+    let value = error_me(false);
 
-    // println!("{:?}", b);
+    print!("{:?}", value);
 
-    // let mut x = 5;
-    // {
-    //     let y = &mut x;
+    if error_me(true).is_ok() {
+        //do something
+        print!("worked")
+    }
 
-    //     *y = 7;
-    // }
+    return Ok(());
+}
+
+
+
+// enum RSEnum {
+//     Foo(i32),
+//     Foo2(Option<i32>),
+//     Bar(String),
+//     Baz(Vec<String>)
+// }
+
+// enum Option2<T> {
+//     None,
+//     Some(T)
+// }
+
+// impl<T> Option2<T> {
+//     fn is_some(&self) -> bool {
+//         return match self {
+//             Option2::None => false,
+//             Option2::Some(_) => true
+//         }
+//     }
+// }
+
+// fn main() {
+//     // let a = vec![];
+//     // let mut b = a;
+
+//     // b.push(1);
+
+//     // println!("{:?}", b);
+
+//     // let mut x = 5;
+//     // {
+//     //     let y = &mut x;
+
+//     //     *y = 7;
+//     // }
     
 
-    // println!("{:?}", x);
+//     // println!("{:?}", x);
 
-    // let mut n = vec![];
-    // let i = &mut n;
+//     // let mut n = vec![];
+//     // let i = &mut n;
 
-    // i.push(1);
-    // println!("{:?}", i);
+//     // i.push(1);
+//     // println!("{:?}", i);
 
 
-    // let foo = RSEnum::Foo(5);
+//     // let foo = RSEnum::Foo(5);
 
-    // if let RSEnum::Foo(value) = foo {
+//     // if let RSEnum::Foo(value) = foo {
 
-    // }
+//     // }
 
-    // match foo {
-    //     RSEnum::Foo(value) => {
+//     // match foo {
+//     //     RSEnum::Foo(value) => {
 
-    //     },
-    //     RSEnum::Foo2(Some(value)) => {
+//     //     },
+//     //     RSEnum::Foo2(Some(value)) => {
 
-    //     },
-    //     RSEnum::Foo2(None) => {
+//     //     },
+//     //     RSEnum::Foo2(None) => {
 
-    //     },
-    //     _ => {}
-    // }
+//     //     },
+//     //     _ => {}
+//     // }
 
-    // let foo = Some(5);
+//     // let foo = Some(5);
 
-    // if let Some(value) = foo {
+//     // if let Some(value) = foo {
         
-    // }
-    // match foo {
-    //     Some(value) => {
+//     // }
+//     // match foo {
+//     //     Some(value) => {
 
-    //     },
-    //     None => {
+//     //     },
+//     //     None => {
 
-    //     },
-    // }
+//     //     },
+//     // }
 
-    // foo.map(|x| {
+//     // foo.map(|x| {
 
-    // });
+//     // });
 
-    // foo.filter(|x| x < &10);
+//     // foo.filter(|x| x < &10);
 
-    let foo = Option2::Some(5);
+//     let foo = Option2::Some(5);
 
-    if foo.is_some() {
-        print!("It is some");
-    }
+//     if foo.is_some() {
+//         print!("It is some");
+//     }
 
-}
+// }
